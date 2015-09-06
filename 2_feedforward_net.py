@@ -28,7 +28,7 @@ layer1 = nn.Affine(784, 400, weight_init=nn.XavierUniform(np.sqrt(2)))(X)
 act1 = nn.rectify(layer1)
 layer2 = nn.Affine(400, 10, weight_init=nn.XavierUniform(np.sqrt(2)))(act1)
 act2 = nn.rectify(layer2)
-probs = nn.softmax(act2)
+probs = nn.softmax(act3)
 
 y_preds = cgt.argmax(probs, axis=1)
 cost = -cgt.mean(categorical.loglik(y, probs))
