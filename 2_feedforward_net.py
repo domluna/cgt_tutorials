@@ -24,11 +24,11 @@ ytrain = ytrain[sortinds]
 X = cgt.matrix('X', fixed_shape=(None, 784))
 y = cgt.vector('y', dtype='i8')
 
-layer1 = nn.Affine(784, 400, weight_init=nn.XavierUniform(np.sqrt(2)))(X)
+layer1 = nn.Affine(784, 400, weight_init=nn.IIDGaussian(std=.1))(X)
 act1 = nn.rectify(layer1)
-layer2 = nn.Affine(400, 10, weight_init=nn.XavierUniform(np.sqrt(2)))(act1)
+layer2 = nn.Affine(400, 400, weight_init=nn.IIDGaussian(std=.1))(act1)
 act2 = nn.rectify(layer2)
-probs = nn.softmax(act3)
+probs = nn.softmax(nn.Affine(400, 10)(act2))
 
 y_preds = cgt.argmax(probs, axis=1)
 cost = -cgt.mean(categorical.loglik(y, probs))
