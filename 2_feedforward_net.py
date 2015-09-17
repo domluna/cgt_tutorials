@@ -24,9 +24,9 @@ ytrain = ytrain[sortinds]
 X = cgt.matrix('X', fixed_shape=(None, 784))
 y = cgt.vector('y', dtype='i8')
 
-layer1 = nn.Affine(784, 400, weight_init=nn.IIDGaussian(std=.1))(X)
+layer1 = nn.Affine(784, 400, weight_init=nn.XavierNormal())(X)
 act1 = nn.rectify(layer1)
-layer2 = nn.Affine(400, 400, weight_init=nn.IIDGaussian(std=.1))(act1)
+layer2 = nn.Affine(400, 400, weight_init=nn.XavierNormal())(act1)
 act2 = nn.rectify(layer2)
 probs = nn.softmax(nn.Affine(400, 10)(act2))
 
@@ -49,7 +49,7 @@ for i in xrange(epochs):
         f(Xtrain[start:end], ytrain[start:end])
     elapsed = time.time() - t0
     costval, errval = cost_and_err(Xtest, ytest)
-    print("Epoch {} took {}, test cost = {}, test error = {}".format(i, elapsed, costval, errval))
+    print("Epoch {} took {}, test cost = {}, test error = {}".format(i+1, elapsed, costval, errval))
 
 
 
